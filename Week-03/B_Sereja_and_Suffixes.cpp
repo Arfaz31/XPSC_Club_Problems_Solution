@@ -39,8 +39,9 @@ int main()
     return 0;
 }
 
-// #include <bits/stdc++.h>
-// using namespace std;
+// solution with set
+//  #include <bits/stdc++.h>
+//  using namespace std;
 
 // int main() {
 //     ios::sync_with_stdio(false);

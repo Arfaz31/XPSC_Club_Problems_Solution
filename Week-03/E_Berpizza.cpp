@@ -9,10 +9,10 @@ int main()
     int q;
     cin >> q;
 
-    queue<int> order;                    // Monocarp এর জন্য arrival order
-    priority_queue<pair<int, int>> rich; // Polycarp এর জন্য (money, -id)
-    vector<bool> served(q + 5, false);   // served কি না check
-    vector<int> money(q + 5, 0);         // customer money
+    queue<int> order;
+    priority_queue<pair<int, int>> rich;
+    vector<bool> served(q + 5, false);
+    vector<int> money(q + 5, 0);
 
     int id = 0;
 
@@ -52,3 +52,25 @@ int main()
 
     return 0;
 }
+
+// 3️⃣ কেন -id ব্যবহার?
+//-id → if money become equal (smaller id comes first)
+// আমরা priority_queue<pair<int,int>> ব্যবহার করি: rich.push({money, -id});
+// priority_queue first দিয়ে compare করে, বড় first আগে।
+
+// যদি first সমান হয়, তখন second দিয়ে compare করে।
+
+// আমরা চাই tie-break → smaller id আগে আসবে, কিন্তু max-heap তো বড় value আগে রাখে।
+
+// 💡 Trick: negative id use করা হয় → কারণ small id কে “bigger” হিসেবে handle করতে চাই।
+
+// উদাহরণ:
+// | customer | money | id | pair pushed = {money, -id} |
+// | -------- | ----- | -- | -------------------------- |
+// | #1       | 10    | 1  | (10, -1)                   |
+// | #2       | 10    | 2  | (10, -2)                   |
+// priority_queue sort করে → (10, -1) আগে আসবে, তারপর (10, -2)
+
+// top এ থাকবে (10, -1) → serve হবে customer #1
+
+// ঠিক একইভাবে tie-break small id works। ✅
