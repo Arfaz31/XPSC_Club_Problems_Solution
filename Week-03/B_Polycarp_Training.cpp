@@ -8,22 +8,48 @@ int main()
 
     int n;
     cin >> n;
-    vector<int> a(n);
-    for (int i = 0; i < n; i++)
-        cin >> a[i];
-
-    sort(a.begin(), a.end());
-
-    int day = 0;
+    multiset<int> s;
     for (int i = 0; i < n; i++)
     {
-        if (a[i] >= day + 1)
+        int x;
+        cin >> x;
+        s.insert(x);
+    }
+    int ans = 0, problems = 1;
+    while (!s.empty())
+    {
+        auto LB = s.lower_bound(problems);
+        if (LB != s.end())
         {
-            day++;
+            ans++;
+            s.erase(LB);
         }
+        else
+        {
+            break;
+        }
+        problems++;
     }
 
-    cout << day << "\n";
+    cout << ans << "\n";
+
+    // Solution 2 sort and Greedy
+    // vector<int> a(n);
+    // for (int i = 0; i < n; i++)
+    //     cin >> a[i];
+
+    // sort(a.begin(), a.end());
+
+    // int day = 0;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     if (a[i] >= day + 1)
+    //     {
+    //         day++;
+    //     }
+    // }
+
+    // cout << day << "\n";
 
     return 0;
 }

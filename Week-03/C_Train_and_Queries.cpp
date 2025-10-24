@@ -12,35 +12,62 @@ int main()
     {
         int n, q;
         cin >> n >> q;
-
-        map<int, int> first, last;
-        for (int i = 0; i < n; i++)
+        map<int, set<int>> mp;
+        for (int i = 1; i <= n; i++)
         {
             int x;
             cin >> x;
-            if (first.find(x) == first.end())
-                first[x] = i; // first occurrence
-            last[x] = i;      // always update last occurrence
+            mp[x].insert(i);
         }
 
-        while (q--)
+        for (int i = 1; i <= q; i++)
         {
             int a, b;
             cin >> a >> b;
-            if (!first.count(a) || !first.count(b))
-            {
+            if (mp.find(a) == mp.end() || mp.find(b) == mp.end())
                 cout << "NO\n";
-            }
-            else if (first[a] <= last[b])
-            {
-                cout << "YES\n";
-            }
             else
             {
-                cout << "NO\n";
+                int startingStationLeftMostIndex, endingStationRightMostIndex;
+                startingStationLeftMostIndex = *mp[a].begin();
+                endingStationRightMostIndex = *mp[b].rbegin();
+                if (startingStationLeftMostIndex <= endingStationRightMostIndex)
+                    cout << "YES\n";
+                else
+                    cout << "NO\n";
             }
         }
     }
+
+    // second solution
+    //     map<int, int> first, last;
+    //     for (int i = 0; i < n; i++)
+    //     {
+    //         int x;
+    //         cin >> x;
+    //         if (first.find(x) == first.end())
+    //             first[x] = i; // first occurrence
+    //         last[x] = i;      // always update last occurrence
+    //     }
+
+    //     while (q--)
+    //     {
+    //         int a, b;
+    //         cin >> a >> b;
+    //         if (!first.count(a) || !first.count(b))
+    //         {
+    //             cout << "NO\n";
+    //         }
+    //         else if (first[a] <= last[b])
+    //         {
+    //             cout << "YES\n";
+    //         }
+    //         else
+    //         {
+    //             cout << "NO\n";
+    //         }
+    //     }
+    // }
     return 0;
 }
 

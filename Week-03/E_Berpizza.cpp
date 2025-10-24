@@ -6,49 +6,83 @@ int main()
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int q;
-    cin >> q;
-
-    queue<int> order;
-    priority_queue<pair<int, int>> rich;
-    vector<bool> served(q + 5, false);
-    vector<int> money(q + 5, 0);
-
-    int id = 0;
-
-    while (q--)
+    int n, customerNo = 1;
+    cin >> n;
+    set<pair<int, int>> s;
+    multiset<pair<int, int>> ml;
+    vector<int> ans;
+    for (int i = 1; i <= n; i++)
     {
         int type;
         cin >> type;
-
         if (type == 1)
         {
-            int m;
-            cin >> m;
-            id++;
-            money[id] = m;
-            order.push(id);      // Monocarp queue
-            rich.push({m, -id}); // Polycarp heap
+            int money;
+            cin >> money;
+            s.insert({customerNo, money});
+            ml.insert({money, -customerNo});
+            customerNo++;
         }
         else if (type == 2)
         {
-            while (served[order.front()])
-                order.pop();
-            int serveId = order.front();
-            order.pop();
-            served[serveId] = true;
-            cout << serveId << " ";
+            int pos = s.begin()->first, money = s.begin()->second;
+            ans.push_back(pos);
+            s.erase(s.begin());
+            ml.erase({money, -pos});
         }
         else
-        { // type == 3
-            while (served[-rich.top().second])
-                rich.pop();
-            int serveId = -rich.top().second;
-            rich.pop();
-            served[serveId] = true;
-            cout << serveId << " ";
+        {
+            int pos = -ml.rbegin()->second, money = ml.rbegin()->first;
+            ans.push_back(pos);
+            ml.erase(--ml.end());
+            s.erase({pos, money});
         }
     }
+    for (auto value : ans)
+        cout << value << " ";
+
+    cout << endl;
+
+    // second solution
+    //  int q;
+    //  cin >> q;
+    //  queue<int> order;
+    //  priority_queue<pair<int, int>> rich;
+    //  vector<bool> served(q + 5, false);
+    //  vector<int> money(q + 5, 0);
+    //  int id = 0;
+    //  while (q--)
+    //  {
+    //      int type;
+    //      cin >> type;
+    //      if (type == 1)
+    //      {
+    //          int m;
+    //          cin >> m;
+    //          id++;
+    //          money[id] = m;
+    //          order.push(id);      // Monocarp queue
+    //          rich.push({m, -id}); // Polycarp heap
+    //      }
+    //      else if (type == 2)
+    //      {
+    //          while (served[order.front()])
+    //              order.pop();
+    //          int serveId = order.front();
+    //          order.pop();
+    //          served[serveId] = true;
+    //          cout << serveId << " ";
+    //      }
+    //      else
+    //      { // type == 3
+    //          while (served[-rich.top().second])
+    //              rich.pop();
+    //          int serveId = -rich.top().second;
+    //          rich.pop();
+    //          served[serveId] = true;
+    //          cout << serveId << " ";
+    //      }
+    //  }
 
     return 0;
 }

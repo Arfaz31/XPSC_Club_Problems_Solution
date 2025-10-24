@@ -12,34 +12,78 @@ int main()
     {
         int n;
         cin >> n;
-        vector<int> a(n);
-        for (int i = 0; i < n; i++)
-            cin >> a[i];
-
-        //  count frequency using map
-        map<int, int> freq;
-        for (int x : a)
-            freq[x]++;
-
-        // find maximum frequency
-        int maxFreq = 0;
-        for (auto &p : freq)
-            maxFreq = max(maxFreq, p.second);
-
-        int result;
-
-        if (maxFreq <= n / 2)
+        map<int, int> cnt;
+        for (int i = 1; i <= n; i++)
         {
-
-            result = n % 2;
+            int x;
+            cin >> x;
+            cnt[x]++;
         }
-        else
+        priority_queue<int> pq;
+        for (auto [x, y] : cnt)
         {
-
-            result = 2 * maxFreq - n;
+            pq.push(y);
         }
-        cout << result << "\n";
+
+        while (!pq.empty())
+        {
+            if (pq.size() < 2)
+            {
+                break;
+            }
+            int x, y;
+            x = pq.top();
+            pq.pop();
+            y = pq.top();
+            pq.pop();
+            x--;
+            y--;
+            if (x >= 1)
+            {
+                pq.push(x);
+            }
+            if (y >= 1)
+            {
+                pq.push(y);
+            }
+        }
+        int ans = 0;
+        while (!pq.empty())
+        {
+            ans += pq.top();
+            pq.pop();
+        }
+        cout << ans << "\n";
     }
+
+    // solutin-2
+    //  while (t--)
+    //  {
+    //      int n;
+    //      cin >> n;
+    //      vector<int> a(n);
+    //      for (int i = 0; i < n; i++)
+    //          cin >> a[i];
+    //      //  count frequency using map
+    //      map<int, int> freq;
+    //      for (int x : a)
+    //          freq[x]++;
+    //      // find maximum frequency
+    //      int maxFreq = 0;
+    //      for (auto &p : freq)
+    //          maxFreq = max(maxFreq, p.second);
+    //      int result;
+    //      if (maxFreq <= n / 2)
+    //      {
+    //          result = n % 2;
+    //      }
+    //      else
+    //      {
+    //          result = 2 * maxFreq - n;
+    //      }
+    //      cout << result << "\n";
+    //  }
+
     return 0;
 }
 
