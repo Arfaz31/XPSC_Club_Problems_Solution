@@ -5,21 +5,13 @@ int main()
 {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
     int t;
     cin >> t;
     while (t--)
     {
         int n;
         cin >> n;
-        int x = n;
-        cout << 2 << endl;
-        for (int i = n - 1; i >= 1; i--)
-        {
-            cout << i << " " << x << endl;
-            x = ceil((x + i) / 2.0);
-        }
+        cout << n * (n - 1) << endl;
     }
-
     return 0;
 }
