@@ -18,14 +18,14 @@ int main()
     while (r < n)
     {
         sum += a[r];
-        if (r - l + 1 == k)
+        if (r - l + 1 == k) // 0 based indext 0 1 2 3 first window is 2 and if l=0,r=2 then 2-0+1=3 which is equal to k then it is valid window and we have to find max sum of that window and update ans, sum(sum -= a[l] this means if we hit the window(r-l+1==k) then we move forward one step and that's why we do remove a[l]) and l
         {
             ans = max(ans, sum);
             sum -= a[l];
             l++;
         }
         r++;
-        }
+    }
     cout << ans << endl;
     return 0;
 }
