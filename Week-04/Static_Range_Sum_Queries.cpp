@@ -28,7 +28,7 @@ int main()
         }
         else
         {
-            cout << pre[b - 1] - pre[a - 2] << endl;
+            cout << pre[b - 1] - pre[a - 2] << endl; // 0-based index that's why a-2
         }
     }
     return 0;
